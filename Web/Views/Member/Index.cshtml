@@ -1,0 +1,42 @@
+﻿@model Web.Models.MemberIndexViewModel
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+    <button id="toggle-filter" class="btn btn-primary mb-2">Toggle Filter</button>
+
+    <div id="filter-box" class="card">
+        <h5 class="card-header">Filter</h5>
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "Member", FormMethod.Post, new { id = "filter-form", @class = "form-inline", role = "form" }))
+            {
+                @Html.LabelFor(m => m.NameFilter, new { @class = "control-label mr-2" })
+                @Html.EditorFor(m => m.NameFilter, new { htmlAttributes = new { @class = "form-control mb-2 mr-sm-2" } })
+                @Html.ValidationMessageFor(m => m.NameFilter, "", new { @class = "text-danger" })
+
+                @Html.LabelFor(m => m.Genders, new { @class = "control-label mr-2" })
+                @Html.DropDownListFor(m => m.GenderFilter, Model.Genders, "Select", new { @class = "form-control mb-2 mr-sm-2" })
+                @Html.ValidationMessageFor(m => m.GenderFilter, "", new { @class = "text-danger" })
+
+                @Html.LabelFor(m => m.Roles, new { @class = "control-label mr-2" })
+                @Html.DropDownListFor(m => m.RoleFilter, Model.Roles, "Select", new { @class = "form-control mb-2 mr-sm-2" })
+                @Html.ValidationMessageFor(m => m.RoleFilter, "", new { @class = "text-danger" })
+
+                <button id="apply-filter" type="submit" class="btn">Apply</button>
+            }
+        </div>
+    </div>
+
+    @{Html.RenderPartial("_ListPartial", Model);}
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/pages/member")
+}

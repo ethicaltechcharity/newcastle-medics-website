@@ -1,0 +1,150 @@
+﻿@model Web.Models.AssignNumberViewModel
+
+@{
+    ViewBag.Title = "Assign Number";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>@ViewBag.Title</h2>
+
+    <h6>Use this form to assign a number to a player for identification.</h6>
+    <hr />
+    <div class="row">
+        <div class="col">
+            @if (!Model.Submitted)
+            {
+                using (@Html.BeginForm("AssignNumber", "Interested", FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <p>Has player pre-registered through the expression of interest form?</p>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active" for="preRegYes">
+                                    <input class="form-check-input" type="radio" name="PreRegistered" id="preRegYes" value="true" checked />
+                                    Yes
+                                </label>
+                                <label class="btn btn-secondary" for="preRegNo">
+                                    <input class="form-check-input" type="radio" id="preRegNo" name="PreRegistered" value="false" />
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-user form-row">
+                        <div class="form-group col-xs-4">
+                            <label for="search-user-box">Search for the user using their last name: </label>
+                            <select id="search-user-box" style="width:100%" class="search-user-box custom-select" name="UserId"></select>
+                            @Html.ValidationMessageFor(m => m.UserId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="create-user">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6  col-lg-4">
+                                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.Genders, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.SelectedGender, Model.Genders, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.SelectedGender, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.DateOfBirth, new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        @Html.DropDownListFor(m => m.SelectedDay, Model.Days, "Day", new { @class = "form-control" })
+                                    </div>
+                                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "Month", new { @class = "form-control" })
+                                    <div class="input-group-append">
+                                        @Html.DropDownListFor(m => m.SelectedYear, Model.Years, "Year", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedDay, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedMonth, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.HaveYouPlayedBefore, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.PlayedBeforeAnswer, Model.HaveYouPlayedBefore, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PlayedBeforeAnswer, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.Positions, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.SelectedPosition, Model.Positions, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.SelectedPosition, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.AssignedNumber, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.AssignedNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.AssignedNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.DateOfAssignment, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.DateOfAssignment, new { htmlAttributes = new { type = "date", @class = "date-picker form-control" } })
+                            <small class="form-text text-muted">Generally leave as default.</small>
+                            @Html.ValidationMessageFor(m => m.DateOfAssignment, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                }
+
+            }
+            else
+            {
+                <p>Number successfully assigned to player.</p>
+
+                @Html.ActionLink("Assign Another Number", "AssignNumber", null, new { @class = "btn btn-primary" })
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/pages/assign-number")
+}
+

@@ -1,0 +1,102 @@
+﻿@model Web.Models.ExpressInterestViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>Delete</h2>
+
+    @if (ViewBag.Deleted)
+    {
+        <h4>Item successfully deleted</h4>
+        @Html.ActionLink("Back to List", "List")
+    }
+    else
+    {
+        <h4>Are you sure you want to delete this?</h4>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedGender)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedGender)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateOfBirth)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EmailAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EmailAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PlayedBeforeAnswer)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PlayedBeforeAnswer)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedPosition)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedPosition)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm("Delete", "Interested", FormMethod.Post, new { role = "form", id = ViewBag.Id }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "List")
+                </div>
+            }
+        </div>
+
+    }
+
+</div>

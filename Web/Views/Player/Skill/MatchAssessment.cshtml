@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Match Assessment";
+}
+
+
+<div class="container px-1">
+
+    <hr class="mx-0 my-2" />
+    <div class="row">
+        <div class="col">
+            <form class="form-inline">
+                <button class="btn btn-secondary mt-1 mr-1 top-num">1</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">2</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">3</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">4</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">5</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">6</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">7</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">8</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">9</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">10</button>
+                <button class="btn btn-secondary mt-1 mr-1 top-num">11</button>
+                <input type="number" class="form-control mt-1 mr-1" style="width:50px;" placeholder="#" />
+                <button class="btn btn-secondary mt-1 mr-1">+</button>
+            </form>
+        </div>
+    </div>
+    <hr class="mx-0 my-2" />
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Foul</button>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Type</option>
+                            <option value="1">Free</option>
+                            <option value="2">Corner</option>
+                            <option value="3">Stroke</option>
+                        </select>
+                        <button type="button" class="btn bg-success">Won</button>
+                        <button type="button" class="btn bg-danger">Lost</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Shot</button>
+                        <button type="button" class="btn bg-success">On Target</button>
+                        <button type="button" class="btn bg-danger">Off Target</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Pass</button>
+                        <button type="button" class="btn bg-success">Complete</button>
+                        <button type="button" class="btn bg-danger">Incomplete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Duel</button>
+                        <button type="button" class="btn bg-success">Won</button>
+                        <button type="button" class="btn bg-danger">Lost</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Chance</button>
+                        <button type="button" class="btn bg-success">Scored</button>
+                        <button type="button" class="btn bg-danger">Missed</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn bg-success">Player Beaten</button>
+                        <button type="button" class="btn bg-danger">Tackled (IP)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn bg-success mt-1">Mis-control</button>
+                    <button type="button" class="btn bg-success mt-1">Interception</button>
+                    <button type="button" class="btn bg-success mt-1">Clearance</button>
+                    <button type="button" class="btn bg-success mt-1">Assist</button>
+                    <button type="button" class="btn bg-success mt-1">Key Pass</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group mt-1">
+                        <button type="button" class="btn disabled">Card</button>
+                        <button type="button" class="btn bg-success">▲</button>
+                        <button type="button" class="btn bg-warning">■</button>
+                        <button type="button" class="btn bg-danger">●</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/pages/player/skill/match-assessment")
+}

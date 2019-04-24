@@ -1,0 +1,343 @@
+﻿@model Web.Models.MemberRegistrationViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container">
+
+    @if (ViewBag.Submitted)
+    {
+        <hr />
+        <h2>Payment</h2>
+        <h6>The following details describe payment.</h6>
+        <hr />
+
+        <div class="card my-2" id="identity">
+            <div class="card-header">
+                Payment
+            </div>
+            <div class="card-body">
+                <p>Please make a bank transfer of @Model.SubscriptionFee to the following bank details, use the reference provided in your payment so we can identity you.</p>
+                <dl>
+                    <dt>Account Name</dt>
+                    <dd>Newcastle Medics</dd>
+                    <dt>Sort Code</dt>
+                    <dd>30-93-55</dd>
+                    <dt>Account Number</dt>
+                    <dd>02433985</dd>
+                    <dt>Payment amount</dt>
+                    <dd>@Model.SubscriptionFee</dd>
+                    <dt>Payment reference</dt>
+                    <dd>@Model.PaymentReference</dd>
+                </dl>
+            </div>
+        </div>
+    }
+    else
+    {
+        <hr />
+        <h2>@ViewBag.Title</h2>
+        <h6>Register for the season using this form.</h6>
+        <hr />
+
+        using (@Html.BeginForm("Register", "Member", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="card my-2" id="identity">
+                <div class="card-header">
+                    Identity
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Have you completed the expression of interest form?</label>
+                            <div class="form-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary @(Model.PreRegistered == true ? "active":"")" for="preRegYes">
+                                        <input class="form-check-input" type="radio" name="PreRegistered" id="preRegYes" value="true" @(Model.PreRegistered == true ? "checked='checked" : "") />
+                                        Yes
+                                    </label>
+                                    <label class="btn btn-secondary @(Model.PreRegistered == false ? "active":"")" for="preRegNo">
+                                        <input class="form-check-input" type="radio" id="preRegNo" name="PreRegistered" value="false" @(Model.PreRegistered == false ? "checked='checked" : "") />
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="other-identity">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.DateOfBirth, new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        @Html.DropDownListFor(m => m.SelectedDay, Model.Days, "Day", new { @class = "form-control" })
+                                    </div>
+                                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "Month", new { @class = "form-control" })
+                                    <div class="input-group-append">
+                                        @Html.DropDownListFor(m => m.SelectedYear, Model.Years, "Year", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedDay, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedMonth, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="full-identity">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6  col-lg-4">
+                                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.Genders, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.SelectedGender, Model.Genders, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.SelectedGender, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-6 col-lg-4">
+                                @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+                                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            <label>Which Medics' squad have you been picked for this season?</label>
+                            @Html.DropDownListFor(m => m.SelectedCurrentTeam, Model.CurrentTeams, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CurrentTeams, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-sm-6 col-lg-4">
+                            <label>What type of member will you be?</label>
+                            @Html.DropDownListFor(m => m.SelectedMemberType, Model.MemberTypes, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.MemberTypes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card my-2" id="playing-history">
+                <div class="card-header">
+                    Playing History
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Have you played hockey for a team before?</label>
+                            <div class="form-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary @(Model.PlayedBefore == true ? "active":"")" for="preRegYes">
+                                        <input class="form-check-input" type="radio" name="PlayedBefore" id="preRegYes" value="true" @(Model.PlayedBefore == true ? "checked='checked" : "") />
+                                        Yes
+                                    </label>
+                                    <label class="btn btn-secondary @(Model.PlayedBefore == false ? "active":"")" for="preRegNo">
+                                        <input class="form-check-input" type="radio" id="preRegNo" name="PlayedBefore" value="false" @(Model.PlayedBefore == false ? "checked='checked" : "") />
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="history">
+                        <div class="form-row">
+                            <div class="col">
+                                <label>Did you play for Newcastle Medics last season?</label>
+                                <div class="form-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary @(Model.PlayedMedics == true ? "active":"")" for="playedMedicsYes">
+                                            <input class="form-check-input" type="radio" name="PlayedMedics" id="playedMedicsYes" value="true" @(Model.PlayedMedics == true ? "checked='checked" : "") />
+                                            Yes
+                                        </label>
+                                        <label class="btn btn-secondary @(Model.PlayedMedics == false ? "active":"")" for="playedMedicsNo">
+                                            <input class="form-check-input" type="radio" id="playedMedicsNo" name="PlayedMedics" value="false" @(Model.PlayedMedics == false ? "checked='checked" : "") />
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="medics-history">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    <label>Which Medics' team did you play for last season?</label>
+                                    @Html.DropDownListFor(m => m.SelectedPreviousTeam, Model.PreviousTeams, "Select", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.PreviousTeams, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    @Html.LabelFor(m => m.ShirtNumber, new { @class = "control-label" })
+                                    @Html.EditorFor(m => m.ShirtNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.ShirtNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="other-history">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    @Html.LabelFor(m => m.PreviousClub, new { @class = "control-label" })
+                                    @Html.EditorFor(m => m.PreviousClub, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.PreviousClub, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    @Html.LabelFor(m => m.PreviousTeam, new { @class = "control-label" })
+                                    @Html.EditorFor(m => m.PreviousTeam, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.PreviousTeam, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card my-2" id="umpiring">
+                <div class="card-header">
+                    Umpiring
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Are you interested in umpiring for the club?</label>
+                            <div class="form-group my-0">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary @(Model.InterestedInUmpiring == true ? "active":"")" for="preRegYes">
+                                        <input class="form-check-input" type="radio" name="InterestedInUmpiring" id="preRegYes" value="true" @(Model.InterestedInUmpiring == true ? "checked='checked" : "") />
+                                        Yes
+                                    </label>
+                                    <label class="btn btn-secondary @(Model.InterestedInUmpiring == false ? "active":"")" for="preRegNo">
+                                        <input class="form-check-input" type="radio" id="preRegNo" name="InterestedInUmpiring" value="false" @(Model.InterestedInUmpiring == false ? "checked='checked" : "") />
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            <sub>Regardless of whether you have any experience</sub>
+                        </div>
+                    </div>
+                    <div id="umpiring-info">
+                        <div class="form-row mt-2">
+                            <div class="col-sm-6 col-lg-4">
+                                <label>Do you hold an umpiring qualification?</label>
+                                <div class="form-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary @(Model.UmpireQualified == true ? "active":"")" for="preRegYes">
+                                            <input class="form-check-input" type="radio" name="UmpireQualified" id="preRegYes" value="true" @(Model.UmpireQualified == true ? "checked='checked" : "") />
+                                            Yes
+                                        </label>
+                                        <label class="btn btn-secondary @(Model.UmpireQualified == false ? "active":"")" for="preRegNo">
+                                            <input class="form-check-input" type="radio" id="preRegNo" name="UmpireQualified" value="false" @(Model.UmpireQualified == false ? "checked='checked" : "") />
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="what-qualification" class="form-group col-sm-6 col-lg-4">
+                                <label>What is the highest umpiring qualification you hold?</label>
+                                @Html.DropDownListFor(m => m.SelectedUmpiringQualification, Model.UmpiringQualifications, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.UmpiringQualifications, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div id="umpire-number">
+                            <div class="form-row">
+                                <div class="col-sm-6 col-lg-4">
+                                    <label>Do you know your umpire number?</label>
+                                    <div class="form-group">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary @(Model.KnowsUmpireNumber == true ? "active":"")" for="preRegYes">
+                                                <input class="form-check-input" type="radio" name="KnowsUmpireNumber" id="preRegYes" value="true" @(Model.KnowsUmpireNumber == true ? "checked='checked" : "") />
+                                                Yes
+                                            </label>
+                                            <label class="btn btn-secondary @(Model.KnowsUmpireNumber == false ? "active":"")" for="preRegNo">
+                                                <input class="form-check-input" type="radio" id="preRegNo" name="KnowsUmpireNumber" value="false" @(Model.KnowsUmpireNumber == false ? "checked='checked" : "") />
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="umpire-number-input" class="form-group col-sm-6 col-lg-4">
+                                    @Html.LabelFor(m => m.UmpireNumber, new { @class = "control-label" })
+                                    @Html.EditorFor(m => m.UmpireNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.UmpireNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card my-2" id="payment">
+                <div class="card-header">
+                    Subs payment
+                </div>
+                <div class="card-body">
+                    <p class="mb-1">Submitting this form will give you the information required to pay for membership.</p>
+                    <ul>
+                        <li>Freshers (First season at the club) membership fee is £85</li>
+                        <li>Returning university students membership fee is £100</li>
+                        <li>Employed members membership fee is £125</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card my-2" id="code-of-conduct">
+                <div class="card-header">
+                    Code of Conduct
+                </div>
+                <div class="card-body pb-0">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.AgreesCodeOfConduct, new { htmlAttributes = new { @class = "form-control" } })
+                                <label for="AgreesCodeOfConduct">I agree to follow the club's <a href="/Member/CodeOfConduct" target="_blank">code of conduct</a>.</label>
+                                @Html.ValidationMessageFor(m => m.AgreesCodeOfConduct, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.DataConsent, new { htmlAttributes = new { @class = "form-control" } })
+                                <label for="DataConsent">I give consent for Newcastle Medics to use my data for these specified <a href="/Member/DataPurposes" target="_blank">purposes</a>.</label>
+                                @Html.ValidationMessageFor(m => m.DataConsent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-2">
+                <input type="submit" value="Submit" class="btn btn-lg btn-primary" />
+            </div>
+        }
+    }
+
+</div>
+
+@section Scripts{
+    <script>
+        var model = @Html.Raw(Json.Encode(Model))
+    </script>
+    @Scripts.Render("~/bundles/pages/member/register")
+}

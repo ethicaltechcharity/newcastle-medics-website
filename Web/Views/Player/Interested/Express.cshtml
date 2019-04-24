@@ -1,0 +1,115 @@
+﻿@using Web.Models
+@model ExpressInterestViewModel
+@{
+    ViewBag.Title = "Express Interest";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>Express Interest</h2>
+
+    <div class="row">
+        <div class="col">
+
+            <h6>Use this form to express your interest to join Newcastle Medics</h6>
+            <hr />
+
+            @if (!Model.Submitted)
+            {
+                using (@Html.BeginForm("Express", "Interested", FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-sm-6  col-lg-4">
+                            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.Genders, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.SelectedGender, Model.Genders, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.SelectedGender, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.DateOfBirth, new { @class = "control-label" })
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    @Html.DropDownListFor(m => m.SelectedDay, Model.Days, "Day", new { @class = "form-control" })
+                                </div>
+                                @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "Month", new { @class = "form-control" })
+                                <div class="input-group-append">
+                                    @Html.DropDownListFor(m => m.SelectedYear, Model.Years, "Year", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.SelectedDay, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.SelectedMonth, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+                            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.HaveYouPlayedBefore, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.PlayedBeforeAnswer, Model.HaveYouPlayedBefore, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PlayedBeforeAnswer, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-sm-6 col-lg-4">
+                            @Html.LabelFor(m => m.Positions, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.SelectedPosition, Model.Positions, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.SelectedPosition, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <small class="text-muted">
+                        By submitting this form you consent to the data submitted being used in administration of Newcastle Medics Hockey Club by authorised persons.
+                    </small>
+
+                    <div class="form-group my-3">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                }
+                
+            }
+            else
+            {
+                <h6>Thank you for your interest to join Newcastle Medics.</h6>
+
+                <a href="/prereg/" class="btn btn-primary my-2" role="button">Submit another</a>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

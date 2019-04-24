@@ -1,0 +1,99 @@
+﻿@model Web.Models.ViewAssessmentViewModel
+
+<div id="results">
+
+    @if (Model.TotalAssessees == 0)
+    {
+        <hr />
+        <h4>No assessments with given filter</h4>
+        <hr />
+    }
+    else
+    {
+        <hr />
+        <h4>Results (@Model.TotalAssessees)</h4>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-hover table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        @foreach (var drill in Model.Drills)
+                        {
+                            <th scope="col">@drill</th>
+                        }
+                        <th scope="col">Rating (Num)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assessee in Model.Assessees)
+                    {
+                        <tr>
+                            <td>@assessee.Number</td>
+                            <td>
+                                @if (assessee.Name.ToLower() != "unknown")
+                                {
+                                    <a href="/Member/Details/@assessee.MemberIdentityId" target="_blank">@assessee.Name</a>
+                                }
+                                else
+                                {
+                                    @assessee.Name
+                                }
+                            </td>
+                            @foreach (var drill in Model.Drills)
+                            {
+                                if (assessee.DrillAssessments.ContainsKey(drill))
+                                {
+                                    <td>@assessee.DrillAssessments[drill].AverageRating <sub>(@assessee.DrillAssessments[drill].TotalRatings)</sub></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td>@assessee.AverageRating <sub>(@assessee.TotalAssessments)</sub></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination">
+                @if (Model.PageNumber == 1)
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="?PageNumber=@(Model.PageNumber - 1)">Previous</a></li>
+                }
+
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (Model.PageNumber == i)
+                    {
+                        <li class="page-item active"><a class="page-link" href="#">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="?PageNumber=@i">@i</a></li>
+                    }
+
+                }
+
+                @if (Model.PageNumber == Model.PageCount)
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="?PageNumber=@(Model.PageNumber + 1)">Next</a></li>
+                }
+            </ul>
+        </nav>
+
+    }
+
+</div>

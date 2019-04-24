@@ -1,0 +1,61 @@
+﻿@model Web.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+
+<div class="container">
+    <hr />
+    <h2>@ViewBag.Title</h2>
+    <h6>Fill out this form to contact us for any reason.</h6>
+    <hr />
+
+    @if (ViewBag.Success)
+    {
+        <div class="alert alert-success" role="alert">
+            Message sent!
+        </div>
+    }
+
+    @using (@Html.BeginForm("Contact", "Home", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <form>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SelectedCategory, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.SelectedCategory, Model.Categories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SelectedCategory, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Message, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LcKdHIUAAAAAMbqzaRwb1EFx7sbksAMmY4zvtWc"></div>
+
+            <div class="my-2">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+
+</div>
+

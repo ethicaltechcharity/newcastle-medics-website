@@ -1,0 +1,110 @@
+﻿@model Web.Models.ExpressInterestViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>Edit</h2>
+
+    <hr />
+
+    @if (ViewBag.Saved != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.Saved
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col">
+            @using (@Html.BeginForm("Edit", "Interested", FormMethod.Post, new { role = "form", id = ViewBag.Id }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6  col-lg-4">
+                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.Genders, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.SelectedGender, Model.Genders, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SelectedGender, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.DateOfBirth, new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.DropDownListFor(m => m.SelectedDay, Model.Days, "Day", new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "Month", new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.SelectedYear, Model.Years, "Year", new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.SelectedDay, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.SelectedMonth, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.HaveYouPlayedBefore, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.PlayedBeforeAnswer, Model.HaveYouPlayedBefore, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PlayedBeforeAnswer, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6 col-lg-4">
+                        @Html.LabelFor(m => m.Positions, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.SelectedPosition, Model.Positions, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SelectedGender, "", new { @class = "control-label" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            }
+
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "List")
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

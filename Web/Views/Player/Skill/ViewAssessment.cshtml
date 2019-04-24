@@ -1,0 +1,33 @@
+﻿@model Web.Models.ViewAssessmentViewModel
+
+@{
+    ViewBag.Title = "View Assessment";
+}
+
+<div class="container">
+
+    <hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+    <div id="filter-box" class="card">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+            @using (Html.BeginForm("ViewAssessment", "Skill", FormMethod.Post, new { id = "filter-form", @class = "form-inline", role = "form" }))
+            {
+                @Html.LabelFor(m => m.Datefilter, new { @class = "control-label mr-2" })
+                @Html.EditorFor(m => m.Datefilter, new { htmlAttributes = new { @class = "form-control mb-2 mr-sm-2" } })
+                @Html.ValidationMessageFor(m => m.Datefilter, "", new { @class = "text-danger" })
+                
+                <button id="apply-filter" type="submit" class="btn">Apply</button>
+            }
+        </div>
+    </div>
+
+    @{Html.RenderPartial("~/Views/Player/Skill/_ResultsPartial.cshtml", Model);}
+
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/pages/player/skill")
+}
