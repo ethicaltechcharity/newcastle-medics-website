@@ -35,7 +35,7 @@ namespace Web.Models
         public DbSet<PlayingShirtDataModel> PlayingShirts { get; set; }
         public DbSet<ContactDataModel> ContactSubmissions { get; set; }
 
-        public ApplicationDbContext() : base("LocalConnection")
+        public ApplicationDbContext() : base("AWSConnection")
         {
         }
 
